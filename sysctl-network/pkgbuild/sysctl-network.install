@@ -1,0 +1,14 @@
+post_install() {
+
+    # disable old nmb, only needed to found very old shares from windows 7 and more older
+    if [[ "$(systemctl is-enabled nmb)" = "enabled" ]] && [[ "$(systemctl is-enabled avahi-daemon.service)" = "disabled" ]]; then
+        systemctl disable nmb
+        systemctl enable avahi-daemon.service
+    fi
+
+
+}
+
+post_upgrade() {
+    post_install
+}
